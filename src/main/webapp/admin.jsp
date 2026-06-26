@@ -1,4 +1,10 @@
-
+<%@page import="com.dto.Employee"%>
+<%@page import="com.dto.Department"%>
+<%@page import="com.dao.inf.EmployeeDAO"%>
+<%@page import="com.dao.impl.EmployeeImplementation"%>
+<%@page import="com.dao.inf.DepartmentDAO"%>
+<%@page import="com.dao.impl.DepartmentImplementation"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,7 +19,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="bg-gray-100">
-
+    <%EmployeeDAO ed=new EmployeeImplementation();
+       List<Employee> l=ed.findAll();
+       int no=l.size();
+       DepartmentDAO dd=new DepartmentImplementation();
+       List<Department> dl=dd.findAll();
+       int nod=dl.size();
+       Employee e1=(Employee) session.getAttribute("Employee");
+       Department s=dd.findbyId(e1.getDept_no());
+     
+    %>
        
     <nav class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -37,7 +52,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-black-500 text-sm">Total Employees</p>
-                        <p class="text-2xl font-bold" id="empCount">0</p>
+                        <p class="text-2xl font-bold" id="empCount"><%=no %></p>
                     </div>
                     <i class="fas fa-users text-3xl text-orange-400"></i>
                 </div>
@@ -48,7 +63,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-black-500 text-sm">Total Departments</p>
-                        <p class="text-2xl font-bold" id="deptCount">0</p>
+                        <p class="text-2xl font-bold" id="deptCount"><%=nod %>></p>
                     </div>
                     <i class="fas fa-building text-3xl text-orange-400"></i>
                 </div>
@@ -66,9 +81,9 @@
             <a href="dept.jsp" class="bg-orange-600 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition flex items-center gap-2">
                 <i class="fas fa-plus-circle"></i> Add Department
             </a>
-            <button href="viewDept.jsp" class="bg-orange-600 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition flex items-center gap-2">
+            <a href="viewDept.jsp" class="bg-orange-600 text-white px-5 py-2 rounded-lg hover:bg-orange-700 transition flex items-center gap-2">
                 <i class="fas fa-list"></i> View Departments
-            </button>
+            </a>
         </div>
 
         
@@ -80,22 +95,23 @@
                         <div class="overflow-x-auto">
                             <table class="w-full border text-sm">
                                 <thead class="bg-gray-100">
+                                        <tbody>
+									<tr>
+			                            <td class="border p-2">Admin</td>
+			                            <td class="border p-2">Job</td>
+			                            <td class="border p-2">Salary</td>
+			                            <td class="border p-2">HR</td>
+			                            <td class="border p-2">Mail</td>
+			                        </tr>
                                     <tr>
-                                        <th class="border p-2 text-left">Name</th>
-                                        <th class="border p-2 text-left">Job</th>
-                                        <th class="border p-2 text-left">Salary</th>
-                                        <th class="border p-2 text-left">Dept</th>
-                                        <th class="border p-2 text-left">Email</th>
+                                        <th class="border p-2 text-left"><%=e1.getName() %>></th>
+                                        <th class="border p-2 text-left"><%=e1.getJob() %>></th>
+                                        <th class="border p-2 text-left"><%=e1.getSalary() %>></th>
+                                        <th class="border p-2 text-left"><%=s.getDept_name() %>></th>
+                                        <th class="border p-2 text-left"><%=e1.getMail() %>></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-						<tr>
-                            <td class="border p-2">Admin</td>
-                            <td class="border p-2">Job</td>
-                            <td class="border p-2">Salary</td>
-                            <td class="border p-2">HR</td>
-                            <td class="border p-2">Mail</td>
-                        </tr>
+                        
 								</tbody>
 						</table>
 				 </div>

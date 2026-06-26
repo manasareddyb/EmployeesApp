@@ -27,7 +27,13 @@ public class Login extends HttpServlet{
             	 if(e!=null) {
             		 HttpSession session=req.getSession();            		 
             		 session.setAttribute("Employee", e);
-            		resp.sendRedirect("dashboard.jsp");
+            		 if(e.getId()==1) {
+            			 resp.sendRedirect("admin.jsp");
+            		 }
+            		 else {
+            			 resp.sendRedirect("dashboard.jsp");
+            		 }
+            		
             	 }
             	 else {
             		 req.setAttribute("success", "Account Not Found");

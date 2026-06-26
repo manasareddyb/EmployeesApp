@@ -19,14 +19,15 @@ public class DepartmentImplementation implements DepartmentDAO {
 	}
     
 	@Override
-	public void adddept(Department d) {
+	public int  adddept(Department d) {
 		// TODO Auto-generated method stub
 		String query="insert into department values(0,?,?)";
+		int i=0;
 		try {
 			PreparedStatement ps=con.prepareStatement(query);
 			ps.setString(1,d.getDept_name());
 			ps.setString(2,d.getLocation());
-			ps.executeUpdate();
+			i=ps.executeUpdate();
 			System.out.println("Data added SuccessFully");
 			
 		} catch (SQLException e) {
@@ -34,6 +35,7 @@ public class DepartmentImplementation implements DepartmentDAO {
 			e.printStackTrace();
 			System.out.println("Filed to add Data");
 		}
+		return i;
 	}
 
 
